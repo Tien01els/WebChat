@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css">
+    <!-- <link rel="stylesheet" href="./assets/css/style.css"> -->
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="main">
+        <div class="sidebar">
+            <div class="chat-sidebar-top">
+                <div class="chat-sidebar-content">
+                    <h3>Chats</h3>
+                    <button type="button" class="btn add-contact">
+                        <i class="ri-add-fill"></i>
+                    </button>
+                </div>
+                <div class="chat-search-contact">
+                    <input class="chat-input-search" placeholder="Search here..."></input>
+                    <button class="btn chat-btn-search">
+                        <i class="ri-search-line"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="chat-list">
+
+            </div>
+        </div>
+        <div class="chat-container">
+            <div class="chat-topbar">
+                <div class="level-left">
+                    <div class="user-image">
+                        <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/c7156d1c-515c-4a5d-ab77-a856fedda897/ddplk9t-1b198c3d-d63d-4125-aa12-0c1e5aff9870.png/v1/fill/w_894,h_894,strp/metalcluster_zero_one_by_markolios_ddplk9t-pre.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MjUwMCIsInBhdGgiOiJcL2ZcL2M3MTU2ZDFjLTUxNWMtNGE1ZC1hYjc3LWE4NTZmZWRkYTg5N1wvZGRwbGs5dC0xYjE5OGMzZC1kNjNkLTQxMjUtYWExMi0wYzFlNWFmZjk4NzAucG5nIiwid2lkdGgiOiI8PTI1MDAifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6aW1hZ2Uub3BlcmF0aW9ucyJdfQ.mLfbZWcq99q7RUYSputnFstpPkJkU5jR94YLR9NRlug">
+                    </div>
+                    <div class="user-activate">
+                        <h2 class="user-name">Revice</h2>
+                        <h4>Online</h4>
+                    </div>
+                </div>
+                <div class="level-right">
+                    <button class="btn btn-search">
+                        <i class="icon ri-search-line"></i>
+                    </button>
+                    <button class="btn btn-phone">
+                        <i class="icon ri-phone-fill"></i>   
+                    </button>
+                    <button class="btn btn-video">
+                        <i class="icon ri-vidicon-line"></i>
+                    </button>
+                    <button class="btn btn-info">
+                        <i class="icon ri-information-fill"></i>
+                    </button>
+                    <button class="btn btn-option">
+                        <i class="icon ri-more-2-fill"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="chat-conversation">
+                <ul class="chat-box">
+
+                    <li class="user-2">
+
+                        <!-- <div class="image-user-2">
+                            <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/c7156d1c-515c-4a5d-ab77-a856fedda897/ddplk9t-1b198c3d-d63d-4125-aa12-0c1e5aff9870.png/v1/fill/w_894,h_894,strp/metalcluster_zero_one_by_markolios_ddplk9t-pre.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MjUwMCIsInBhdGgiOiJcL2ZcL2M3MTU2ZDFjLTUxNWMtNGE1ZC1hYjc3LWE4NTZmZWRkYTg5N1wvZGRwbGs5dC0xYjE5OGMzZC1kNjNkLTQxMjUtYWExMi0wYzFlNWFmZjk4NzAucG5nIiwid2lkdGgiOiI8PTI1MDAifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6aW1hZ2Uub3BlcmF0aW9ucyJdfQ.mLfbZWcq99q7RUYSputnFstpPkJkU5jR94YLR9NRlug">
+                        </div> -->
+
+                        <div class="list-conversation">
+                            <div class="text-user-2">
+                                Xin chào bạn
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <form class="chat-form">
+                <div class="level-left">
+                    <button class="btn btn-more">
+                        <i class="icon ri-more-line"></i>
+                    </button>
+                    <button class="btn btn-icon">
+                        <i class="icon ri-star-smile-line"></i>
+                    </button>
+                </div>
+                <div class="level-center">
+                    <input type="text" name="chat-input" id="chat-input" class="chat-input" placeholder="Type your message...">
+                </div>
+                <div class="level-right">
+                    <button class="btn btn-micro">
+                        <i class="icon ri-mic-line"></i>
+                    </button>
+                    <button class="btn btn-send">
+                        <i class="icon ri-send-plane-2-line"></i> 
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    const socket = io();
+    const chatForm = document.querySelector('.chat-form');
+    const chatInput = document.querySelector('.chat-input');
+    const btnSend = document.querySelector('.btn-send');
+
+    const addContact = document.querySelector('.add-contact');
+    const valueContact = document.querySelector('.chat-input-search');
+    const userContact = document.querySelector('.user-name');
+    var name;
+
+    addContact.onclick = () => {
+        name = valueContact.value;
+        userContact.innerText = name;
+    };
+
+    chatForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const message = chatInput.value;
+        if (message !== '') {
+            socket.emit('on-chat', {
+                id: 2,
+                name: name,
+                message: message
+            });
+            var chatItem = document.createElement('li');
+            chatItem.classList.add('user-1');
+            var divChat = document.createElement('div');
+            divChat.classList.add('text-user-1');
+            divChat.innerText = message;
+            chatItem.appendChild(divChat);
+            chatBox.appendChild(chatItem);
+        }
+        chatInput.value = '';
+    });
+    const chatBox = document.querySelector('.chat-box');
+    socket.on('user-chat', (message) => {
+        console.log(userContact.innerText);
+        console.log(name);
+        if (message !== '' && name !== userContact.innerText) {
+            var chatItem = document.createElement('li');
+            chatItem.classList.add('user-2');
+            var divChat = document.createElement('div');
+            divChat.classList.add('text-user-2');
+            divChat.innerText = message.message;
+            chatItem.appendChild(divChat);
+            chatBox.appendChild(chatItem);
+        }
+    })
+
+    // btnSend.onclick = function(e) {
+    //     e.preventDefault();
+    //     
+    //     li.setClassName(");
+    //     
+    //     divChat.setClassName("text-user-1");
+    //     divChat.innerText = message;
+    //     li.appendChild(divChat);
+    //     chatBox.appendChild(li);
+    // }
+</script>
+<style>
+     :root {
+        --heading-text: rgb(82, 82, 82);
+    }
+    
+    * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+    
+    html {
+        font-size: 62.5%;
+        line-height: 1.6rem;
+        box-sizing: border-box;
+        font-family: 'Roboto', sans-serif;
+    }
+    
+    .btn {
+        display: inline-block;
+        text-align: center;
+        vertical-align: middle;
+        cursor: pointer;
+        user-select: none;
+        background: none;
+        border: none;
+        border-radius: .5rem;
+    }
+    
+    .icon {
+        font-size: 2.2rem;
+    }
+    
+    #main {
+        display: flex;
+    }
+    
+    .sidebar {
+        min-width: 320px;
+        max-width: 320px;
+        height: 100vh;
+    }
+    
+    .sidebar .chat-sidebar-top {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 120px;
+        padding: 24px 24px 0;
+    }
+    
+    .sidebar .chat-sidebar-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 2.1rem;
+    }
+    
+    .sidebar .chat-sidebar-content h3 {
+        font-weight: 450;
+        color: var(--heading-text);
+    }
+    
+    .sidebar .chat-sidebar-content .add-contact {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 32px;
+        height: 32px;
+        color: #4eac6d;
+        background-color: rgba(78, 172, 109, .1);
+        cursor: pointer;
+    }
+    
+    .sidebar .chat-sidebar-content .add-contact:hover {
+        color: #fff;
+        background-color: #4eac6d;
+    }
+    
+    .sidebar .chat-search-contact {
+        display: flex;
+        justify-content: space-between;
+        height: 44px;
+        background: #f6f6f9;
+        border-radius: 8px;
+        overflow: hidden;
+        font-size: 1.5rem;
+    }
+    
+    .sidebar .chat-search-contact .chat-input-search {
+        padding-top: 8px;
+        padding-bottom: 8px;
+        padding-left: 16px;
+        border: none;
+        outline: none;
+        background: #f6f6f9;
+        flex-grow: 1;
+    }
+    
+    .sidebar .chat-search-contact .chat-btn-search {
+        padding: 8px 16px;
+        background: #f6f6f9;
+    }
+    
+    .sidebar .chat-search-contact .chat-btn-search:hover {
+        opacity: .7;
+    }
+    
+    .chat-container {
+        position: relative;
+        flex-grow: 1;
+        height: 100vh;
+    }
+    
+    .chat-topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 320px;
+        z-index: 99;
+        padding: 24px;
+        height: 92px;
+        background: rgba(255, 255, 255, .05);
+        backdrop-filter: blur(7px);
+        border-bottom: 1px solid #eaeaf1;
+    }
+    
+    .chat-topbar .level-left {
+        display: flex;
+    }
+    
+    .chat-topbar .level-left .user-image {
+        border-radius: 999px;
+        overflow: hidden;
+        margin-right: 8px;
+    }
+    
+    .chat-topbar .level-left .user-image img {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .chat-topbar .level-left .user-activate {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+    }
+    
+    .chat-topbar .level-left .user-activate h2 {
+        font-weight: 450;
+        font-size: 2.2rem;
+        color: var(--heading-text);
+    }
+    
+    .chat-topbar .level-left .user-activate h4 {
+        font-weight: 400;
+        font-size: 1.4rem;
+        color: var(--heading-text);
+    }
+    
+    .chat-topbar .level-right .btn {
+        width: 40px;
+        height: 40px;
+        margin-right: 8px;
+    }
+    
+    .chat-topbar .level-right .icon {
+        color: var(--heading-text);
+    }
+    
+    .chat-topbar .level-right .icon:hover {
+        color: #4eac6d;
+    }
+    
+    .chat-form {
+        display: flex;
+        justify-content: space-between;
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        left: 320px;
+        height: 92px;
+        padding: 24px;
+    }
+    
+    .chat-form .btn {
+        height: 43px;
+        width: 43px;
+    }
+    
+    .chat-form .btn:hover {
+        color: #4eac6d;
+    }
+    
+    .chat-form .btn .icon {
+        line-height: 43px;
+    }
+    
+    .chat-form .level-center {
+        flex-grow: 1;
+    }
+    
+    .chat-form .chat-input {
+        height: 43px;
+        width: 100%;
+        border: 1px solid #333;
+        outline: none;
+        border-radius: 8px;
+        padding: 8px 16px;
+    }
+    
+    .chat-form .level-left,
+    .chat-form .level-right {
+        display: flex;
+        justify-content: space-evenly;
+        width: 98px;
+    }
+    
+    .chat-form .level-left {
+        margin-right: 8px;
+    }
+    
+    .chat-form .level-right {
+        margin-left: 8px;
+    }
+    
+    .chat-form .btn-send {
+        color: #fff;
+        background-color: #4eac6d;
+        opacity: 0.8;
+    }
+    
+    .chat-form .btn-send:hover {
+        color: #fff;
+        opacity: 1;
+    }
+    
+    .chat-conversation {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        background: url("https://themesbrand.com/doot/layouts/assets/images/bg-pattern/pattern-05.png");
+        background-color: #f2f2f2;
+        padding: 24px;
+    }
+    
+    .chat-box {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        margin-bottom: 92px;
+    }
+    
+    .chat-conversation img,
+    .chat-conversation .image-user-2,
+    .chat-conversation .image-user-1 {
+        width: 28px;
+        height: 28px;
+        border-radius: 999px !important;
+    }
+    
+    .chat-conversation .user-1 {
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+    }
+    
+    .chat-conversation .user-2 {
+        display: flex;
+        width: 100%;
+    }
+    
+    .chat-conversation .text-user-1 {
+        padding: 12px 20px;
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+        border-bottom-left-radius: 12px;
+        background: #cce2d3;
+        color: black;
+        margin-bottom: 12px;
+        font-size: 1.5rem;
+        margin-right: 16px;
+    }
+    
+    .chat-conversation .image-user-1,
+    .chat-conversation .image-user-2 {
+        align-self: flex-end;
+    }
+    
+    .chat-conversation .text-user-2 {
+        padding: 12px 20px;
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+        border-bottom-right-radius: 12px;
+        background: white;
+        color: black;
+        margin-bottom: 12px;
+        font-size: 1.5rem;
+        margin-left: 16px;
+    }
+    
+    .chat-conversation-user {
+        display: flex;
+    }
+</style>
+
+</html>
