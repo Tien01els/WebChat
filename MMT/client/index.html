@@ -117,38 +117,85 @@
     var name;
 
     addContact.onclick = () => {
-        name = valueContact.value;
-        userContact.innerText = name;
+        userContact.innerText = valueContact.value;
+        socket.emit('add-contact');
     };
 
     chatForm.addEventListener('submit', (e) => {
         e.preventDefault();
         const message = chatInput.value;
         if (message !== '') {
+            // let encryptedText = CryptoJS.AES.encrypt(message, sharedSecret.toString()).toString();
+            // console.log(encryptedText)
+            name = userContact.innerText;
             socket.emit('on-chat', {
                 id: 2,
                 name: name,
                 message: message
             });
-            var chatItem = document.createElement('li');
-            chatItem.classList.add('user-1');
-            var divChat = document.createElement('div');
-            divChat.classList.add('text-user-1');
-            divChat.innerText = message;
-            chatItem.appendChild(divChat);
-            chatBox.appendChild(chatItem);
         }
         chatInput.value = '';
     });
     const chatBox = document.querySelector('.chat-box');
+    let publicKey = {
+        p: 0,
+        g: 0
+    };
+
+    let secretKey = Math.floor(Math.random() * (1000 - 1)) + 1;
+    let sharedSecret = 0;
+
+
+    socket.on('get_public_key', (data) => {
+        publicKey = data;
+    });
+
+    socket.on('get_mess', (data) => {
+        let num = 1;
+        if (data !== null) {
+            for (let i = 0; i < secretKey; i++) {
+                num *= data;
+                num %= publicKey.p;
+            }
+        } else {
+            for (let i = 0; i < secretKey; i++) {
+                num *= publicKey.g;
+                num %= publicKey.p;
+            }
+        }
+        socket.emit('get_mess', num);
+    });
+
+    socket.on('send_mess', (data) => {
+        sharedSecret = 1;
+        for (let i = 0; i < secretKey; i++) {
+            sharedSecret *= data;
+            sharedSecret %= publicKey.p;
+        }
+
+        console.log(`shared secret: ${sharedSecret}`);
+    });
+
+
     socket.on('user-chat', (message) => {
         console.log(userContact.innerText);
-        console.log(name);
-        if (message !== '' && name !== userContact.innerText) {
+
+        console.log(message.name);
+        if (message.message !== '' && message.name !== userContact.innerText) {
+            // let decryptedText = CryptoJS.AES.decrypt(message.message, sharedSecret.toString()).toString(CryptoJS.enc.Utf8);
             var chatItem = document.createElement('li');
             chatItem.classList.add('user-2');
             var divChat = document.createElement('div');
             divChat.classList.add('text-user-2');
+            divChat.innerText = message.message;
+            chatItem.appendChild(divChat);
+            chatBox.appendChild(chatItem);
+        } else if (message.message !== '' && message.name === userContact.innerText) {
+            // let decryptedText = CryptoJS.AES.decrypt(message.message, sharedSecret.toString()).toString(CryptoJS.enc.Utf8);
+            var chatItem = document.createElement('li');
+            chatItem.classList.add('user-1');
+            var divChat = document.createElement('div');
+            divChat.classList.add('text-user-1');
             divChat.innerText = message.message;
             chatItem.appendChild(divChat);
             chatBox.appendChild(chatItem);
@@ -378,6 +425,7 @@
         outline: none;
         border-radius: 8px;
         padding: 8px 16px;
+        font-size: 15px;
     }
     
     .chat-form .level-left,
