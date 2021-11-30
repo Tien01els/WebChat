@@ -7,20 +7,18 @@ const { SocketAddress } = require('net');
 const server = http.createServer(app);
 
 const { Server } = require('socket.io');
-const publicSecret = configurePublicKeys();
 
 const io = new Server(server);
 let clients = new Set();
-io.on('connection', (socket) => {
+io.on('connection', socket => {
     console.log('User connected');
-    socket.emit('get_public_key', publicSecret);
+    socket.emit('get_public_key', configurePublicKeys());
 
     clients.add(socket);
     socket.on('on-chat', data => {
         io.emit('user-chat', data);
     })
-
-
+    shareKeys();
 })
 
 app.get('/', (req, res) => {

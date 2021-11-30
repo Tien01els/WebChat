@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
     <!-- <link rel="stylesheet" href="./assets/css/style.css"> -->
     <title>Document</title>
 </head>
@@ -102,6 +103,35 @@
             </form>
         </div>
     </div>
+    <div id="modal">
+        <div class="modal-container">
+            <div class="modal-close">
+                <i class="ri-close-fill"></i>
+            </div>
+            <div class="modal-header">
+                <span>Create Contact</span>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="text" name="email" id="" class="form-input" placeholder="Enter Email">
+                </div>
+                <div class="form-group">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" name="name" id="" class="form-input input-name" placeholder="Enter Name">
+                </div>
+                <div class="form-group">
+                    <label for="message" class="form-label">Invatation Message</label>
+                    <textarea type="text" name="message" id="" class="form-input" placeholder="Enter Message"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <!-- <button class="btn btn-close">Close</button> -->
+                <button class="btn btn-invite">Invite</button>
+            </div>
+        </div>
+    </div>
+
 </body>
 
 <script src="/socket.io/socket.io.js"></script>
@@ -114,53 +144,67 @@
     const addContact = document.querySelector('.add-contact');
     const valueContact = document.querySelector('.chat-input-search');
     const userContact = document.querySelector('.user-name');
-    var name;
+    const chatBox = document.querySelector('.chat-box');
+    let sharedSecret = 0;
 
+    const modal = document.querySelector('#modal');
+    const modalClose = document.querySelector('.modal-close');
+    const btnInvite = modal.querySelector('#modal .btn-invite');
+    const inviteName = modal.querySelector('#modal .input-name');
+    var user = {
+        id: 2,
+        name: "",
+        message: "",
+        publicKey: {
+            p: 0,
+            g: 0
+        },
+        secretKey: 0
+    }
     addContact.onclick = () => {
-        userContact.innerText = valueContact.value;
-        socket.emit('add-contact');
+        modal.classList.add("active");
     };
+    modalClose.onclick = () => {
+        modal.classList.remove("active");
+
+    };
+    btnInvite.onclick = () => {
+        userContact.innerText = inviteName.value;
+        modal.classList.remove("active");
+        // socket.emit('add-contact');
+    }
+    socket.on('get_public_key', (data) => {
+        user.publicKey = data;
+    });
+    user.secretKey = Math.floor(Math.random() * (1000 - 1)) + 1;
 
     chatForm.addEventListener('submit', (e) => {
         e.preventDefault();
         const message = chatInput.value;
         if (message !== '') {
-            // let encryptedText = CryptoJS.AES.encrypt(message, sharedSecret.toString()).toString();
-            // console.log(encryptedText)
-            name = userContact.innerText;
+            let encryptedText = CryptoJS.AES.encrypt(message, sharedSecret.toString()).toString();
+            console.log(encryptedText)
+            user.name = userContact.innerText;
             socket.emit('on-chat', {
-                id: 2,
-                name: name,
-                message: message
+                id: user.id,
+                name: user.name,
+                message: encryptedText
             });
         }
         chatInput.value = '';
-    });
-    const chatBox = document.querySelector('.chat-box');
-    let publicKey = {
-        p: 0,
-        g: 0
-    };
-
-    let secretKey = Math.floor(Math.random() * (1000 - 1)) + 1;
-    let sharedSecret = 0;
-
-
-    socket.on('get_public_key', (data) => {
-        publicKey = data;
     });
 
     socket.on('get_mess', (data) => {
         let num = 1;
         if (data !== null) {
-            for (let i = 0; i < secretKey; i++) {
+            for (let i = 0; i < user.secretKey; i++) {
                 num *= data;
-                num %= publicKey.p;
+                num %= user.publicKey.p;
             }
         } else {
-            for (let i = 0; i < secretKey; i++) {
-                num *= publicKey.g;
-                num %= publicKey.p;
+            for (let i = 0; i < user.secretKey; i++) {
+                num *= user.publicKey.g;
+                num %= user.publicKey.p;
             }
         }
         socket.emit('get_mess', num);
@@ -168,35 +212,31 @@
 
     socket.on('send_mess', (data) => {
         sharedSecret = 1;
-        for (let i = 0; i < secretKey; i++) {
+        for (let i = 0; i < user.secretKey; i++) {
             sharedSecret *= data;
-            sharedSecret %= publicKey.p;
+            sharedSecret %= user.publicKey.p;
         }
-
         console.log(`shared secret: ${sharedSecret}`);
     });
 
 
     socket.on('user-chat', (message) => {
-        console.log(userContact.innerText);
-
-        console.log(message.name);
         if (message.message !== '' && message.name !== userContact.innerText) {
-            // let decryptedText = CryptoJS.AES.decrypt(message.message, sharedSecret.toString()).toString(CryptoJS.enc.Utf8);
+            let decryptedText = CryptoJS.AES.decrypt(message.message, sharedSecret.toString()).toString(CryptoJS.enc.Utf8);
             var chatItem = document.createElement('li');
             chatItem.classList.add('user-2');
             var divChat = document.createElement('div');
             divChat.classList.add('text-user-2');
-            divChat.innerText = message.message;
+            divChat.innerText = decryptedText;
             chatItem.appendChild(divChat);
             chatBox.appendChild(chatItem);
         } else if (message.message !== '' && message.name === userContact.innerText) {
-            // let decryptedText = CryptoJS.AES.decrypt(message.message, sharedSecret.toString()).toString(CryptoJS.enc.Utf8);
+            let decryptedText = CryptoJS.AES.decrypt(message.message, sharedSecret.toString()).toString(CryptoJS.enc.Utf8);
             var chatItem = document.createElement('li');
             chatItem.classList.add('user-1');
             var divChat = document.createElement('div');
             divChat.classList.add('text-user-1');
-            divChat.innerText = message.message;
+            divChat.innerText = decryptedText;
             chatItem.appendChild(divChat);
             chatBox.appendChild(chatItem);
         }
@@ -521,6 +561,126 @@
     
     .chat-conversation-user {
         display: flex;
+    }
+    /* Modal */
+    
+    #modal {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 999;
+        background: rgba(0, 0, 0, 0.4);
+        display: none;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    #modal.active {
+        display: flex;
+    }
+    
+    .modal-container {
+        width: 500px;
+        max-width: calc(100% - 32px);
+        min-height: 200px;
+        background: #fff;
+        position: relative;
+        animation: modalFadeIn ease .5s;
+    }
+    
+    .modal-header {
+        height: 52px;
+        padding: 16px;
+        background: #4eac6d;
+    }
+    
+    .modal-header span {
+        color: #fff;
+        font-size: 1.6rem;
+        vertical-align: middle;
+    }
+    
+    .modal-close {
+        position: absolute;
+        right: 0;
+        top: 4px;
+        padding: 12px;
+        color: #fff;
+        cursor: pointer;
+        opacity: 0.5;
+        font-size: 2rem;
+    }
+    
+    .modal-close:hover {
+        opacity: 1;
+    }
+    
+    .modal-body {
+        height: 320px;
+        padding: 24px;
+    }
+    
+    .modal-body .form-group {
+        margin-bottom: 16px;
+        font-size: 1.5rem;
+    }
+    
+    .modal-body .form-label {
+        display: inline-block;
+        width: 100%;
+        margin-bottom: 8px;
+    }
+    
+    .modal-body .form-input {
+        height: 40px;
+        padding: 8px 16px;
+        width: 100%;
+    }
+    
+    .modal-body .form-group textarea {
+        height: 80px;
+    }
+    
+    .modal-footer {
+        display: flex;
+        justify-content: flex-end;
+        margin-right: 16px;
+        margin-bottom: 16px;
+    }
+    
+    .modal-footer .btn {
+        width: 72px;
+        height: 40px;
+        margin: 4px;
+        padding: 8px 16px;
+        font-size: 1.5rem;
+    }
+    
+    .modal-footer .btn:hover {
+        opacity: 0.7;
+    }
+    
+    .modal-footer .btn-close {
+        color: #4eac6d;
+        background: #fff;
+    }
+    
+    .modal-footer .btn-invite {
+        color: #fff;
+        background: #4eac6d;
+    }
+    
+    @keyframes modalFadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-100px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 </style>
 
