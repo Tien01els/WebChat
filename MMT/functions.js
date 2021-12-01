@@ -32,7 +32,7 @@ exports.randomPrime = () => {
         if (isPrime(n)) {
             return n;
         } else {
-            n--;
+            n++;
         }
     }
 };
